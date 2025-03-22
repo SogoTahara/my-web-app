@@ -1,16 +1,16 @@
 <h1>詳細</h1>
 <p>
-  Title:<br>
+  タイトル:<br>
   <%= @book.title %>
 </p>
 
 <p>
-  Name:<br>
+  名前:<br>
   <%= @book.name %>
 </p>
 
 <p>
-  Content:<br>
+  本文:<br>
   <%= @book.content %>
 </p>
 
@@ -25,40 +25,40 @@
 <% end %>
 
 <p>
-  Author:<%= @book.author %>
+  著者:<%= @book.author %>
 </p>
 
 <h2>返信一覧</h2>
 <% @book.reviews.each do |review| %>
   <p>
-    Name:<br>
+    名前:<br>
     <%= review.name %>
   </p>
   <p>
-    Content:<br>
+    本文:<br>
     <%= review.content %>
   </p>
   <p>
-    <%= link_to 'Destroy Review', [review.book, review],
-      data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' } %>
+    <%= link_to '返信を削除', [review.book, review],
+      data: { turbo_method: 'delete', turbo_confirm: '本当に消しますか？' } %>
   </p>
 <% end %>
 
 <h2>返信する</h2>
 <%= form_with model: [@book, @book.reviews.build] do |form| %>
   <div>
-    <%= form.label :name %><br>
+    <%= form.label :name, "名前"  %><br>
     <%= form.text_field :name %>
   </div>
    <div>
-    <%= form.label :content %><br>
+    <%= form.label :content, "本文"  %><br>
     <%= form.text_area :content %>
   </div>
   <div>
-    <%= form.submit %>
+    <%= form.submit "作成"  %>
   </div>
 <% end %>
 
-<%= link_to 'top', books_path %>
+<%= link_to 'トップへ', books_path %>
 
 
