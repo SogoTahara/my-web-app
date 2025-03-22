@@ -1,0 +1,64 @@
+<h1>詳細</h1>
+<p>
+  Title:<br>
+  <%= @book.title %>
+</p>
+
+<p>
+  Name:<br>
+  <%= @book.name %>
+</p>
+
+<p>
+  Content:<br>
+  <%= @book.content %>
+</p>
+
+<% if @book.rating.present? %>
+      <p>評価: <%= "★" * @book.rating + "☆" * (5 - @book.rating) %></p>
+<% else %>
+      <p>評価: 未評価</p>
+<% end %>
+
+<% if @book.image_url.present? %>
+  <img src="<%= @book.image_url %>" alt="<%= @book.title %>の表紙" width="200">
+<% end %>
+
+<p>
+  Author:<%= @book.author %>
+</p>
+
+<h2>返信一覧</h2>
+<% @book.reviews.each do |review| %>
+  <p>
+    Name:<br>
+    <%= review.name %>
+  </p>
+  <p>
+    Content:<br>
+    <%= review.content %>
+  </p>
+  <p>
+    <%= link_to 'Destroy Review', [review.book, review],
+      data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' } %>
+  </p>
+<% end %>
+
+<h2>返信する</h2>
+<%= form_with model: [@book, @book.reviews.build] do |form| %>
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </div>
+   <div>
+    <%= form.label :content %><br>
+    <%= form.text_area :content %>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'top', books_path %>
+
+

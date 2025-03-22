@@ -1,0 +1,42 @@
+<%= form_with model: @book do |form| %>
+    <% if @book.errors.any? %>
+      <div>
+        <ul>
+          <% @book.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div>
+      <%= form.label :title, "タイトル" %><br>
+      <%= form.text_field :title %>
+    </div>
+    <div>
+      <%= form.label :name, "名前" %><br>
+      <%= form.text_field :name %>
+    </div>
+    <div>
+      <%= form.label :content, "本文" %><br>
+      <%= form.text_area :content %>
+    </div>
+    <div>
+      <%= form.label :image_url, "画像URL" %><br>
+      <%= form.text_field :image_url %>
+    </div>
+    <div>
+      <%= form.label :author, "著者名" %><br>
+      <%= form.text_field :author %>
+    </div>
+    <div>
+      <%= form.label :genre, "ジャンル" %>
+      <%= form.select :genre, options_for_select(["ファンタジー", "SF", "ミステリー", "ノンフィクション", "その他"], selected: @book.genre) %>
+    </div>
+    <div>
+      <%= form.label :rating, "評価 (1〜5)" %>
+      <%= form.select :rating, options_for_select((1..5).to_a, selected: @book.rating) %>
+    </div>
+    <div>
+      <%= form.submit "作成" %>
+    </div>
+  <% end %>

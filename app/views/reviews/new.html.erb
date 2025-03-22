@@ -1,0 +1,32 @@
+<h1>レビューを追加</h1>
+
+<%= form_with(model: [@book, @review]) do |form| %>
+  <% if @review.errors.any? %>
+    <div class="error_messages">
+      <h2>エラーがあります:</h2>
+      <ul>
+        <% @review.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :content %><br>
+    <%= form.text_area :content %>
+  </div>
+
+  
+
+  <div>
+    <%= form.submit "レビューを追加" %>
+  </div>
+<% end %>
+
+<%= link_to '戻る', book_path(@book) %>

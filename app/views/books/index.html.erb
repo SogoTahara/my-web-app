@@ -1,0 +1,65 @@
+<h1>感想一覧</h1>
+<% if user_signed_in? %>
+  <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+<% else %>
+  <%= link_to 'ログイン', new_user_session_path %>
+  <%= link_to 'サインアップ', new_user_registration_path %>
+<% end %>
+
+<br>
+<%= link_to '作る', new_book_path %>
+
+<%= form_tag search_books_path, method: :get do %>
+  <%= text_field_tag :query, params[:query], placeholder: "本のタイトルを検索" %>
+  <%= submit_tag "検索" %>
+<% end %>
+
+
+<!-- ジャンルのフィルタリング用のリンク -->
+<p>ジャンルで絞り込む:</p>
+<% ["ファンタジー", "SF", "ミステリー", "ノンフィクション", "その他"].each do |genre| %>
+  <%= link_to genre, books_path(genre: genre) %> |
+<% end %>
+<%= link_to "すべて表示", books_path %>
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>タイトル</th>
+    <th>名前</th>
+    <th>内容</th>
+    <th></th>
+  </tr>
+  <% @books.each do |book| %>
+  <tr>
+    <td><%= book.id %></td>
+    <td><%= book.title %></td>
+    <td><%= book.name %></td>
+    <td><%= book.content %></td>
+
+    <td>
+    <% if book.rating.present? %>
+      <p>評価: <%= "★" * book.rating + "☆" * (5 - book.rating) %></p>
+    <% else %>
+      <p>評価: 未評価</p>
+    <% end %>
+    </td>
+
+
+    <td><%= link_to 'show', book_path(book) %></td>
+    <td><%= link_to 'edit', edit_book_path(book) %></td>
+    <td><%= link_to 'destroy', book_path(book),
+          data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' }%></td>
+    
+  </tr>
+
+  <tr>
+    <td>
+      <% if book.image_url.present? %>
+        <img src="<%= book.image_url %>" alt="<%= book.title %>の表紙" width="80">
+      <% end %>
+    </td>
+  </tr>
+  
+  <% end %>
+</table>
