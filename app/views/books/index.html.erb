@@ -7,7 +7,7 @@
 <% end %>
 
 <br>
-<%= link_to '作成', new_book_path %>
+<%= link_to '作成する', new_book_path %>
 
 <%= form_tag search_books_path, method: :get do %>
   <%= text_field_tag :query, params[:query], placeholder: "本のタイトルを検索" %>
